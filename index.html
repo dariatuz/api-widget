@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>API-игра</title>
+  <style>
+    body {
+      background: #f2f2f2;
+      font-family: 'Courier New', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+    }
+    .api-widget {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .api-widget h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .api-widget select,
+    .api-widget input,
+    .api-widget textarea,
+    .api-widget button {
+      width: 100%;
+      margin-bottom: 12px;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    .api-widget button {
+      background-color: #0078f0;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    .api-widget pre {
+      background: #f6f8fa;
+      padding: 10px;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="api-widget">
+    <h2>Попробуй API-запрос</h2>
+    <select id="method">
+      <option>GET</option>
+      <option>POST</option>
+    </select>
+    <input type="text" id="url" placeholder="https://api.example.com/data" />
+    <textarea id="body" placeholder='{"key": "value"}'></textarea>
+    <button onclick="sendRequest()">Отправить запрос</button>
+    <pre id="response">Здесь появится ответ...</pre>
+  </div>
+
+  <script>
+    function sendRequest() {
+      const method = document.getElementById("method").value;
+      const url = document.getElementById("url").value;
+      const rawBody = document.getElementById("body").value;
+      let parsedBody;
+
+      try {
+        parsedBody = JSON.parse(rawBody || '{}');
+      } catch (e) {
+        parsedBody = { error: "Неверный JSON" };
+      }
+
+      const mockResponse = {
+        status: 200,
+        message: "Фейковый ответ от сервера",
+        yourRequest: {
+          method: method,
+          url: url,
+          body: parsedBody
+        }
+      };
+
+      document.getElementById("response").textContent =
+        JSON.stringify(mockResponse, null, 2);
+    }
+  </script>
+</body>
+</html>
